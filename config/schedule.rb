@@ -1,5 +1,5 @@
 set :output, "#{Whenever.path}/log/crontab.log"
 
-every 10.minutes do
-  command "cd #{Whenever.path} && afplay chime.mp3"
+every 1.minutes do
+  command "cd #{Whenever.path} && mpg123 -b 1024 chime.mp3"
 end
