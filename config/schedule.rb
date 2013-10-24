@@ -26,7 +26,7 @@ end
 #---
 
 #3限始鈴
-every 1.day, :at => '12:50 pm' do
+every 1.day, :at => '12:49 pm' do
   command "cd #{Whenever.path} && mpg123 -b 1024 sounds/chime.mp3"
 end
 
