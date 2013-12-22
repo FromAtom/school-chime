@@ -2,6 +2,7 @@
 #!/usr/bin/env ruby
 
 require "rbconfig"
+require "holiday_japan"
 
 class Toller
   def initialize(chime_path, closing_chime_path)
@@ -9,18 +10,22 @@ class Toller
     @closing_sound = closing_chime_path
   end
 
-  def toll()
+  def toll
     #時間帯によって鳴らすmp3を変える
     chose_toll = choose_toll()
 
     #OSによって使うコマンドを変える
     chose_hammer = choose_hammer()
 
-    `#{chose_hammer} #{chose_toll}`
-    puts "played '#{chose_toll}' [#{Time.now}]"
+    if holiday?
+      puts "Thanks GOD! It's holiday!!!"
+    else
+      `#{chose_hammer} #{chose_toll}`
+      puts "played '#{chose_toll}' [#{Time.now}]"
+    end
   end
 
-  def choose_hammer()
+  def choose_hammer
     if RUBY_PLATFORM.downcase =~ /linux/
       return "mpg123 -b 1024 -q"
     end
@@ -30,16 +35,22 @@ class Toller
     end
   end
 
-  def choose_toll()
+  def choose_toll
     #終業時間以降は蛍の光を鳴らす
-    if is_closing?
+    if closing?
       return @closing_sound
     else
       return @chime_sound
     end
   end
 
-  def is_closing?()
+  def holiday?
+    today = Date.today
+    wday = today.wday
+    return wday == 0 || wday == 6 || HolidayJapan.check(today)
+  end
+
+  def closing?
     if Time.now.hour >= 22
       return TRUE
     else
@@ -49,4 +60,4 @@ class Toller
 end
 
 toller = Toller.new("sounds/chime.mp3", "sounds/hotaru.mp3")
-toller.toll()
+toller.toll
