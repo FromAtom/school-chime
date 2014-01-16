@@ -59,5 +59,5 @@ class Toller
   end
 end
 
-toller = Toller.new("sounds/chime.mp3", "sounds/hotaru.mp3")
+toller = Toller.new("sounds/chime.mp3", "sounds/kane.wav")
 toller.toll
