@@ -12,16 +12,28 @@ class Toller
 
   def toll
     #時間帯によって鳴らすmp3を変える
-    chose_toll = choose_toll()
+    chose_toll = choose_toll
 
     #OSによって使うコマンドを変える
-    chose_hammer = choose_hammer()
+    chose_hammer = choose_hammer
 
     if holiday?
       puts "Thanks GOD! It's holiday!!!"
     else
-      `#{chose_hammer} #{chose_toll}`
+      smash_count = how_count_smash
+      smash_count.times do
+        `#{chose_hammer} #{chose_toll}`
+      end
       puts "played '#{chose_toll}' [#{Time.now}]"
+    end
+  end
+
+  private
+  def how_count_smash
+    if closing?
+      return 3
+    else
+      return 1
     end
   end
 
@@ -36,7 +48,6 @@ class Toller
   end
 
   def choose_toll
-    #終業時間以降は蛍の光を鳴らす
     if closing?
       return @closing_sound
     else
