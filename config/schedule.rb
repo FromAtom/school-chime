@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 set :output, "#{Whenever.path}/log/crontab.log"
+set :chime, "cd #{Whenever.path} && bundle exec ruby school-chime.rb"
+env :PATH, "$HOME/.rbenv/bin:$PATH"
+
+#テスト用
+every 1.minutes do
+  command "#{chime}"
+end
 
 #1限始鈴
 every 1.day, :at => '8:50 am' do

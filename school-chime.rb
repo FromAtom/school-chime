@@ -31,7 +31,7 @@ class Toller
   private
   def how_count_smash
     if closing?
-      return 3
+      return 1
     else
       return 1
     end
@@ -70,5 +70,5 @@ class Toller
   end
 end
 
-toller = Toller.new("sounds/chime.mp3", "sounds/kane.mp3")
+toller = Toller.new("sounds/chime.mp3", "sounds/hotaru.mp3")
 toller.toll
